@@ -9,7 +9,7 @@ def load_data():
 
 def main():
     # Styling
-    st.set_page_config(page_title="Stock Screener & Calculator", layout="wide")
+    st.set_page_config(page_title=" MEFIC Stock Screener", layout="wide")
 
     st.markdown("""
         <style>
@@ -29,11 +29,24 @@ def main():
 
     # Tab 1: Screener
     with tabs[0]:
-        st.sidebar.header(" Adjust Weights")
-        w_pe = st.sidebar.slider("PE Score Weight", 0.0, 1.0, 0.35, key="pe")
-        w_roe = st.sidebar.slider("ROE Score Weight", 0.0, 1.0, 0.35, key="roe")
-        w_roa = st.sidebar.slider("ROA Score Weight", 0.0, 1.0, 0.15, key="roa")
-        w_div = st.sidebar.slider("Dividend Score Weight", 0.0, 1.0, 0.15, key="div")
+        st.sidebar.header("Adjust Weights")
+
+        w_pe = st.sidebar.number_input(
+        "PE Score Weight", min_value=0.0, max_value=1.0, value=0.35, step=0.01,
+        key="pe", help="Lower PE means better value"
+        )
+        w_roe = st.sidebar.number_input(
+        "ROE Score Weight", min_value=0.0, max_value=1.0, value=0.35, step=0.01,
+        key="roe", help="Higher ROE means better profitability"
+        )
+        w_roa = st.sidebar.number_input(
+        "ROA Score Weight", min_value=0.0, max_value=1.0, value=0.15, step=0.01,
+        key="roa", help="Higher ROA means better asset efficiency"
+        )
+        w_div = st.sidebar.number_input(
+        "Dividend Score Weight", min_value=0.0, max_value=1.0, value=0.15, step=0.01,
+        key="div", help="Higher dividends are attractive to income investors"
+        )
 
         total = w_pe + w_roe + w_roa + w_div
         w_pe, w_roe, w_roa, w_div = w_pe/total, w_roe/total, w_roa/total, w_div/total
